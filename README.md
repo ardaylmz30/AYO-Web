@@ -41,7 +41,7 @@ Ayo-Web/
 
 ```bash
 git clone https://github.com/<ardaylmz30>/AYO-Web.git
-cd Ayo-Web-Son
+cd AYO-Web
 ```
 
 Then run `web-launcher.bat` (Windows) or serve the folder with any static file

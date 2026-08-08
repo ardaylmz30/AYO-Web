@@ -37,7 +37,7 @@ Ayo-Web/
 ## Kurulum
 
 ``` bash
-git clone https://github.com/<ardaylmz30>/AYO-Web.git
+git clone https://github.com/ardaylmz30/AYO-Web.git
 cd AYO-Web
 ```
 

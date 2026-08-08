@@ -38,7 +38,7 @@ Ayo-Web/
 
 ``` bash
 git clone https://github.com/<ardaylmz30>/AYO-Web.git
-cd Ayo-Web-Son
+cd AYO-Web
 ```
 
 Windows'ta `web-launcher.bat` dosyasını çalıştırın.

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AYO! - Web Edition</title>
+
+    <!-- Security Meta Tags -->
+    <!-- Note: some headers, like X-Frame-Options and X-Content-Type-Options, can only be
+         set as real HTTP headers (on the server/CDN side) - they can't be added via meta tag.
+         If you deploy this on Cloudflare Pages / Netlify / Vercel, it's worth adding these too:
+         X-Content-Type-Options: nosniff
+         X-Frame-Options: DENY -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' https://api.qrserver.com;
+        connect-src 'self';
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        frame-ancestors 'none';
+    ">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), fullscreen=(self)">
+
+    <!-- Google Fonts: Outfit for clean, modern game typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Game board -->
+        <div id="game-board">
+            <div id="felt-table">
+                <!-- Direction and color wheel (center) -->
+                <div id="center-wheel" class="clockwise">
+                    <svg class="arrows" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <!-- Rotation direction arrows (SVG) -->
+                        <path id="arrow1" d="M50 12 A38 38 0 0 1 88 50 l-8 -5 m8 5 l-1 -10" fill="none" stroke="#f2c14e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                        <path id="arrow2" d="M50 88 A38 38 0 0 1 12 50 l8 5 m-8 -5 l1 10" fill="none" stroke="#f2c14e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+
+                <!-- Draw and discard piles -->
+                <div id="piles-container">
+                    <!-- Draw pile -->
+                    <div id="draw-pile" class="card-back">
+                        <div class="card-inner">
+                            <div class="card-star"></div>
+                            <span class="logo-text">AYO</span>
+                        </div>
+                        <div class="draw-prompt">Draw a card</div>
+                    </div>
+                    <!-- Discard pile -->
+                    <div id="discard-pile-container"><div id="active-color-badge" class="active-color">C</div>
+                        <!-- Cards get added here via JS -->
+                        <div id="discard-pile"></div>
+                    </div>
+                </div>
+
+                <!-- Penalty warning banner -->
+                <div id="penalty-banner" class="hidden">
+                    <div class="penalty-text">PENALTY STACK: +2 CARDS!</div>
+                    <div class="penalty-sub">Play a +2 card or draw from the deck!</div>
+                </div>
+
+                <!-- Player panels and hands -->
+                <!-- Bot 2 (top) -->
+                <div id="player-bot2" class="player-panel pos-top">
+                    <div class="avatar">2</div>
+                    <div class="info">
+                        <div class="name">Bot 2</div>
+                        <div class="card-count">7 Cards</div>
+                    </div>
+                    <div class="hand bot-hand"></div>
+                </div>
+
+                <!-- Bot 1 (left) -->
+                <div id="player-bot1" class="player-panel pos-left">
+                    <div class="avatar">1</div>
+                    <div class="info">
+                        <div class="name">Bot 1</div>
+                        <div class="card-count">7 Cards</div>
+                    </div>
+                    <div class="hand bot-hand"></div>
+                </div>
+
+                <!-- Bot 3 (right) -->
+                <div id="player-bot3" class="player-panel pos-right">
+                    <div class="avatar">3</div>
+                    <div class="info">
+                        <div class="name">Bot 3</div>
+                        <div class="card-count">7 Cards</div>
+                    </div>
+                    <div class="hand bot-hand"></div>
+                </div>
+
+                <!-- You (bottom) -->
+                <div id="player-sen" class="player-panel pos-bottom active-turn">
+                    <div class="avatar">Y</div>
+                    <div class="info">
+                        <div class="name">You</div>
+                        <div class="card-count">7 Cards</div>
+                    </div>
+                </div>
+                <!-- Human player's cards (kept outside the panel so they can be positioned relative to felt-table) -->
+                <div id="human-hand" class="hand"></div>
+            </div>
+        </div>
+
+        <!-- Left panel: game history logs -->
+        <div id="sidebar">
+            <div id="log-panel">
+                <h3>Game Log</h3>
+                <div id="log-feed">
+                    <div class="log-item system">AYO Web has started!</div>
+                </div>
+            </div>
+            <button id="btn-sidebar-share" class="btn btn-secondary">Share Game 🔗</button>
+        </div>
+
+        <!-- Speech bubbles (AYO!) -->
+        <div id="speech-bubbles"></div>
+
+        <!-- START SCREEN (Menu Overlay) -->
+        <div id="menu-overlay" class="overlay">
+            <div class="menu-box">
+                <div class="logo">AYO<span class="logo-bang">!</span></div>
+                <h2> Classic AYO - Web Edition</h2>
+                <p class="subtitle">Play with your friends or challenge AI bots.</p>
+                <div class="menu-buttons">
+                    <button id="btn-start" class="btn">START GAME</button>
+                    <button id="btn-menu-share" class="btn btn-secondary">Share Game 🔗</button>
+                </div>
+                
+                <div class="rules-box">
+                    <h4>How To Play:</h4>
+                    <ul>
+                        <li>Play a card that matches the current color or number.</li>
+                        <li> Use <b>Skip, Reverse, and +2</b> action cards strategically.</li>
+                        <li> <b>+2 Stacking</b> is enabled! Pass the penalty to the next player by playing another +2 card.</li>
+                        <li>The first player to get rid of all their cards wins!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- GAME OVER SCREEN (Game Over Overlay) -->
+        <div id="game-over-overlay" class="overlay hidden">
+            <div class="menu-box text-center">
+                <h1 id="win-title">CONGRATULATIONS, YOU WIN! 🎉</h1>
+                <p id="win-subtitle" class="subtitle">What a fantastic game!</p>
+                <button id="btn-restart" class="btn">PLAY AGAIN</button>
+                <canvas id="confetti-canvas"></canvas>
+            </div>
+        </div>
+
+        <!-- SHARE SCREEN (Share Overlay) -->
+        <div id="share-overlay" class="overlay hidden">
+            <div class="menu-box">
+                <h2>Share the Game</h2>
+                <p class="subtitle">Scan the QR code below to play on your phone or share the game with your friends.</p>
+                <div id="qr-container">
+                    <img id="qr-image" src="" alt="Loading QR Code..." style="background: white; padding: 10px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 20px;">
+                </div>
+                <div class="share-link-container">
+                    <input type="text" id="share-url" readonly style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: #fff; font-family: monospace; font-size: 13px; outline: none; margin-right: 10px; width: calc(100% - 100px);">
+                    <button id="btn-copy-link" class="btn" style="padding: 10px 20px; font-size: 14px;">Kopyala</button>
+                </div>
+                <button id="btn-share-close" class="btn btn-secondary" style="margin-top: 20px; width: 100%;">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

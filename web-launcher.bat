@@ -27,15 +27,34 @@ if "%LOCAL_IP%"=="" (
 )
 
 echo.
+:: Node.js is required for the online server
+where node >nul 2>nul
+if errorlevel 1 (
+    echo [HATA] Node.js bulunamadi. https://nodejs.org adresinden LTS surumunu kurun.
+    pause
+    exit /b 1
+)
+
+cd /d "%~dp0"
+if not exist "node_modules\" (
+    echo [+] Gerekli paketler kuruluyor ^(sadece ilk seferde^)...
+    call npm install --omit=dev
+    if errorlevel 1 (
+        echo [HATA] Paketler kurulamadi. Internet baglantinizi kontrol edin.
+        pause
+        exit /b 1
+    )
+)
+
 echo [+] Bilgisayarda tarayici aciliyor...
 start http://localhost:8001
 
 echo.
-echo [+] Web sunucusu port 8000 uzerinde baslatiliyor...
+echo [+] Oyun sunucusu port 8001 uzerinde baslatiliyor...
 echo [!] Sunucuyu kapatmak icin bu pencereyi kapatabilir veya Ctrl+C yapabilirsiniz.
 echo.
 
-:: Start the server
-py -3.13 -m http.server 8001
+:: Start the server (game files + online features)
+node server.js
 
 pause

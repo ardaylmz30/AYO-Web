@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AYO! - Main Menu</title>
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' https://api.qrserver.com;
+        connect-src 'self';
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        frame-ancestors 'none';
+    ">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body class="menu-page">
+    <!-- Animated background -->
+    <div class="menu-bg" aria-hidden="true">
+        <div class="board-glow glow-a"></div>
+        <div class="board-glow glow-b"></div>
+        <div class="board-glow glow-c"></div>
+    </div>
+
+    <main class="menu-shell">
+        <!-- LEFT: logo + menu -->
+        <section class="menu-main">
+            <header class="brand">
+                <div class="brand-logo">AYO<span class="brand-bang">!</span></div>
+                <p class="brand-tag">The classic color &amp; number card game</p>
+            </header>
+
+            <nav class="menu-list" aria-label="Main menu">
+                <button class="menu-item primary" data-action="bots">
+                    <span class="mi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="8" width="16" height="11" rx="3.5"/><path d="M12 8V4.5M9.5 4.5h5"/><circle cx="9" cy="13.5" r="1.4" class="fill"/><circle cx="15" cy="13.5" r="1.4" class="fill"/><path d="M2.5 13v2M21.5 13v2"/></svg></span>
+                    <span class="mi-text"><span class="mi-title">Play with Bots</span><span class="mi-sub">Quick game against 1 to 3 bots</span></span>
+                    <span class="mi-go"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></span>
+                </button>
+
+                <button class="menu-item" data-action="online">
+                    <span class="mi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>
+                    <span class="mi-text"><span class="mi-title">Play Online</span><span class="mi-sub">Match with players around the world</span></span>
+                    <span class="mi-badge">SOON</span>
+                </button>
+
+                <button class="menu-item" data-action="room">
+                    <span class="mi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="3"/><path d="M12 9v6M9 12h6"/></svg></span>
+                    <span class="mi-text"><span class="mi-title">Create Room</span><span class="mi-sub">Play privately with your friends</span></span>
+                    <span class="mi-badge">SOON</span>
+                </button>
+
+                <button class="menu-item" data-action="friends">
+                    <span class="mi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19c.6-3.4 3-5 6-5s5.4 1.6 6 5"/><circle cx="17.5" cy="9.5" r="2.4"/><path d="M17 14.2c2.3.2 3.8 1.6 4.2 4"/></svg></span>
+                    <span class="mi-text"><span class="mi-title">Friends</span><span class="mi-sub" id="friends-sub">Add friends and invite them to a game</span></span>
+                    <span class="mi-count" id="friends-count">0</span>
+                </button>
+
+                <button class="menu-item" data-action="themes">
+                    <span class="mi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1 .8-1.7 1.8-1.7H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11.5" r="1.3" class="fill"/><circle cx="10" cy="7.3" r="1.3" class="fill"/><circle cx="15" cy="7.5" r="1.3" class="fill"/></svg></span>
+                    <span class="mi-text"><span class="mi-title">Themes</span><span class="mi-sub" id="themes-sub">Change the table, colors and background</span></span>
+                </button>
+
+                <div class="menu-divider"></div>
+
+                <div class="menu-row">
+                    <button class="menu-item compact" data-action="settings">
+                        <span class="mi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9M4 12h16"/><circle cx="15" cy="7" r="2" class="fill"/><circle cx="9" cy="17" r="2" class="fill"/><circle cx="9" cy="12" r="0.1"/></svg></span>
+                        <span class="mi-title">Settings</span>
+                    </button>
+                    <button class="menu-item compact" data-action="history">
+                        <span class="mi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
+                        <span class="mi-title">Match History</span>
+                    </button>
+                    <button class="menu-item compact" data-action="howto">
+                        <span class="mi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2.9-1.2 1.8M12 16.6v.1"/></svg></span>
+                        <span class="mi-title">How to Play</span>
+                    </button>
+                    <button class="menu-item compact" data-action="share">
+                        <span class="mi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2.6"/><circle cx="17.5" cy="6" r="2.6"/><circle cx="17.5" cy="18" r="2.6"/><path d="M8.3 10.8l6.9-3.6M8.3 13.2l6.9 3.6"/></svg></span>
+                        <span class="mi-title">Share</span>
+                    </button>
+                </div>
+            </nav>
+
+            <footer class="menu-footer">
+                <span>Web Edition</span>
+                <span class="dot"></span>
+                <span>Inspired by UNO. Not affiliated with Mattel.</span>
+            </footer>
+        </section>
+
+        <!-- RIGHT: showcase -->
+        <aside class="menu-showcase" aria-hidden="true">
+            <div class="fan">
+                <div class="card kirmizi fan-card" style="--r:-26deg;--x:-150px;--d:0s"><div class="card-inner"><div class="corner top-left">9</div><div class="card-star"></div><div class="value">9</div><div class="corner bottom-right">9</div></div></div>
+                <div class="card sari fan-card" style="--r:-13deg;--x:-75px;--d:.4s"><div class="card-inner"><div class="corner top-left">5</div><div class="card-star"></div><div class="value">5</div><div class="corner bottom-right">5</div></div></div>
+                <div class="card siyah fan-card" style="--r:0deg;--x:0px;--d:.8s"><div class="card-inner"><div class="corner top-left">&#9733;</div><div class="card-star"></div><div class="wild-center"></div><div class="corner bottom-right">&#9733;</div></div></div>
+                <div class="card mavi fan-card" style="--r:13deg;--x:75px;--d:1.2s"><div class="card-inner"><div class="corner top-left">+2</div><div class="card-star"></div><div class="value action-text">+2</div><div class="corner bottom-right">+2</div></div></div>
+                <div class="card yesil fan-card" style="--r:26deg;--x:150px;--d:1.6s"><div class="card-inner"><div class="corner top-left">7</div><div class="card-star"></div><div class="value">7</div><div class="corner bottom-right">7</div></div></div>
+            </div>
+            <div class="record" id="record-chip">
+                <div class="record-item"><span class="record-num" id="rec-played">0</span><span class="record-lbl">Played</span></div>
+                <div class="record-item"><span class="record-num" id="rec-wins">0</span><span class="record-lbl">Wins</span></div>
+                <div class="record-item"><span class="record-num" id="rec-rate">0%</span><span class="record-lbl">Win rate</span></div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- ============ PANELS ============ -->
+    <div id="panel-overlay" class="panel-overlay hidden">
+        <!-- Settings -->
+        <section id="panel-settings" class="panel hidden" role="dialog" aria-labelledby="ps-title">
+            <button class="panel-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <h2 id="ps-title">Settings</h2>
+            <p class="panel-sub">Changes are saved automatically.</p>
+
+            <div class="setting">
+                <div class="setting-text"><b>Sound effects</b><span>Card sounds and jingles</span></div>
+                <button id="set-sound" class="switch" role="switch" aria-checked="true"><span class="knob"></span></button>
+            </div>
+            <div class="setting">
+                <div class="setting-text"><b>Background music</b><span>Calm music during the game</span></div>
+                <button id="set-music" class="switch" role="switch" aria-checked="true"><span class="knob"></span></button>
+            </div>
+            <div class="setting">
+                <div class="setting-text"><b>Volume</b><span id="vol-label">70%</span></div>
+                <input id="set-volume" class="range" type="range" min="0" max="100" step="5" value="70">
+            </div>
+            <div class="setting stacked">
+                <div class="setting-text"><b>Number of bots</b><span>How many opponents you play against</span></div>
+                <div id="set-bots" class="segmented">
+                    <button data-value="1">1</button><button data-value="2">2</button><button data-value="3">3</button>
+                </div>
+            </div>
+            <div class="setting stacked">
+                <div class="setting-text"><b>Interface scale</b><span>Make menus and the game table smaller or larger</span></div>
+                <div id="set-scale" class="segmented">
+                    <button data-value="85">85%</button><button data-value="100">100%</button><button data-value="115">115%</button><button data-value="130">130%</button>
+                </div>
+            </div>
+            <div class="setting stacked">
+                <div class="setting-text"><b>Bot speed</b><span>How fast the bots take their turn</span></div>
+                <div id="set-speed" class="segmented">
+                    <button data-value="slow">Slow</button><button data-value="normal">Normal</button><button data-value="fast">Fast</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Match history -->
+        <section id="panel-history" class="panel wide hidden" role="dialog" aria-labelledby="ph-title">
+            <button class="panel-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <h2 id="ph-title">Match History</h2>
+            <div class="stat-row">
+                <div class="stat"><span id="h-played">0</span><small>Played</small></div>
+                <div class="stat win"><span id="h-wins">0</span><small>Wins</small></div>
+                <div class="stat lose"><span id="h-losses">0</span><small>Losses</small></div>
+                <div class="stat"><span id="h-rate">0%</span><small>Win rate</small></div>
+            </div>
+            <ul id="history-list" class="history-list"></ul>
+            <div id="history-empty" class="empty hidden">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+                <p>No matches yet. Play a game against the bots and it will show up here.</p>
+            </div>
+            <button id="btn-clear-history" class="link-danger">Clear history</button>
+        </section>
+
+        <!-- How to play -->
+        <section id="panel-howto" class="panel wide hidden" role="dialog" aria-labelledby="pht-title">
+            <button class="panel-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <h2 id="pht-title">How to Play</h2>
+            <p class="panel-sub">Be the first player to get rid of all your cards.</p>
+
+            <h3 class="sec-title">The basics</h3>
+            <ol class="howto-steps">
+                <li><b>Everyone starts with 7 cards.</b> One card is turned face up to start the discard pile.</li>
+                <li><b>Match the top card</b> by color or by number/symbol, then play it from your hand.</li>
+                <li><b>No match? Draw one card</b> from the deck and your turn ends.</li>
+                <li><b>Last card:</b> when you are down to one card, AYO! is called for you.</li>
+            </ol>
+
+            <h3 class="sec-title">Special cards</h3>
+            <ul class="card-rules">
+                <li><span class="mc mc-red"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M6.5 17.5l11-11"/></svg></span><div><b>Skip</b><small>The next player loses their turn.</small></div></li>
+                <li><span class="mc mc-blue"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5"/></svg></span><div><b>Reverse</b><small>The direction of play flips.</small></div></li>
+                <li><span class="mc mc-green"><i>+2</i></span><div><b>Draw Two</b><small>The next player draws 2 cards, unless they stack a +2 or +4 on top.</small></div></li>
+                <li><span class="mc mc-black"><em class="wheel"></em></span><div><b>Color Change</b><small>Play it on any card, then choose the new color.</small></div></li>
+                <li><span class="mc mc-black"><em class="wheel"></em><i>+4</i></span><div><b>Wild +4</b><small>Choose a color; the next player draws 4. You may only play it if you have no card of the current color.</small></div></li>
+            </ul>
+
+            <h3 class="sec-title">Stacking penalties</h3>
+            <p class="howto-text">When you are hit by a +2 or +4 you can pass it on by playing another +2 or +4. The penalty keeps adding up until someone cannot (or does not want to) stack and has to draw all the cards.</p>
+
+            <h3 class="sec-title">Tips</h3>
+            <ul class="howto-tips">
+                <li>Keep your Wild cards for later, they are your best way out of a tight spot.</li>
+                <li>Watch the card counts: a player's count turns red when they have 2 cards or fewer.</li>
+                <li>The gold ring on the table points at whose turn it is. The dial in the corner shows the direction.</li>
+            </ul>
+            <button class="btn" data-action="bots-from-panel">START A GAME</button>
+        </section>
+
+        <!-- Friends -->
+        <section id="panel-friends" class="panel wide hidden" role="dialog" aria-labelledby="pf-title">
+            <button class="panel-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <h2 id="pf-title">Friends</h2>
+            <p class="panel-sub">Add friends with their friend code. They get a request they can accept or decline.</p>
+            <p id="online-status" class="online-status" role="status"></p>
+
+            <div class="profile-card">
+                <div class="avatar-lg" id="me-avatar">P</div>
+                <div class="profile-fields">
+                    <label for="me-name">Your name</label>
+                    <input id="me-name" type="text" maxlength="16" autocomplete="off">
+                    <div class="code-row"><span>Your friend code</span><b id="me-code">AYO-0000</b><button id="btn-copy-code" class="mini-btn">Copy</button></div>
+                </div>
+            </div>
+
+            <h3 class="sec-title">Add a friend</h3>
+            <form id="friend-form" class="add-row" autocomplete="off">
+                <input id="friend-name" type="text" maxlength="16" placeholder="Friend's name" aria-label="Friend's name">
+                <input id="friend-code" type="text" maxlength="8" placeholder="Code (AYO-7K3Q)" aria-label="Friend code (optional)">
+                <button type="submit" class="btn">Add</button>
+            </form>
+            <div id="friend-msg" class="form-msg" role="status"></div>
+
+            <div id="request-section" class="hidden">
+                <h3 class="sec-title">Pending requests <span id="request-total" class="pill">0</span></h3>
+                <ul id="request-list" class="friend-list request-list"></ul>
+            </div>
+
+            <h3 class="sec-title">Your friends <span id="friend-total" class="pill">0</span></h3>
+            <ul id="friend-list" class="friend-list"></ul>
+            <div id="friend-empty" class="empty hidden">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19c.6-3.4 3-5 6-5s5.4 1.6 6 5"/><circle cx="17.5" cy="9.5" r="2.4"/><path d="M17 14.2c2.3.2 3.8 1.6 4.2 4"/></svg>
+                <p>No friends yet. Add someone above, or share your friend code with them.</p>
+            </div>
+            <p class="fine-print">Friends who are online get your invite right away and can accept or decline it. For friends who are offline, Copy invite gives you a link to send in a chat app. Tap a friend to see their profile.</p>
+        </section>
+
+        <!-- Themes -->
+        <section id="panel-themes" class="panel wide hidden" role="dialog" aria-labelledby="pt-title">
+            <button class="panel-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <h2 id="pt-title">Themes</h2>
+            <p class="panel-sub">Pick a look for the table, the background and the highlights. It is saved on this device.</p>
+            <div id="theme-grid" class="theme-grid" role="radiogroup" aria-label="Theme"></div>
+        </section>
+
+        <!-- Friend profile -->
+        <section id="panel-profile" class="panel wide hidden" role="dialog" aria-labelledby="pp-title">
+            <button class="panel-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <button id="btn-profile-back" class="back-link"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>Friends</button>
+            <div class="fp-head">
+                <div class="avatar-lg" id="fp-avatar">P</div>
+                <div class="fp-id">
+                    <h2 id="pp-title">Player</h2>
+                    <span class="fp-code" id="fp-code">AYO-0000</span>
+                    <span class="fp-status" id="fp-status"></span>
+                </div>
+            </div>
+            <div class="stat-row">
+                <div class="stat"><span id="fp-played">–</span><small>Played</small></div>
+                <div class="stat win"><span id="fp-wins">–</span><small>Wins</small></div>
+                <div class="stat lose"><span id="fp-losses">–</span><small>Losses</small></div>
+                <div class="stat"><span id="fp-rate">–</span><small>Win rate</small></div>
+            </div>
+            <ul class="fp-facts">
+                <li><span>Friends since</span><b id="fp-since">–</b></li>
+                <li><span>Friends on AYO!</span><b id="fp-friends">–</b></li>
+            </ul>
+            <p id="fp-note" class="fine-print"></p>
+            <div class="fp-actions">
+                <button id="fp-invite" class="btn">Invite to a game</button>
+                <button id="fp-remove" class="link-danger">Remove friend</button>
+            </div>
+        </section>
+
+        <!-- Coming soon (Online / Room) -->
+        <section id="panel-soon" class="panel hidden" role="dialog" aria-labelledby="pn-title">
+            <button class="panel-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <div class="soon-icon" id="soon-icon"></div>
+            <span class="soon-badge">COMING SOON</span>
+            <h2 id="pn-title">Play Online</h2>
+            <p id="pn-text" class="panel-sub"></p>
+            <ul id="pn-list" class="soon-list"></ul>
+            <button class="btn" data-action="bots-from-panel">PLAY WITH BOTS INSTEAD</button>
+        </section>
+
+        <!-- Share -->
+        <section id="panel-share" class="panel hidden" role="dialog" aria-labelledby="psh-title">
+            <button class="panel-close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <h2 id="psh-title">Share the Game</h2>
+            <p class="panel-sub">Scan the QR code on your phone or send the link to your friends.</p>
+            <img id="qr-image" class="qr" src="" alt="QR code">
+            <div class="share-row">
+                <input id="share-url" type="text" readonly>
+                <button id="btn-copy-link" class="btn">Copy</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="settings.js"></script>
+    <script src="audio.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        // Opened with another static server (e.g. VS Code "Go Live"): use the AYO! server on port 8001
+        if (typeof io !== 'function' && location.protocol.indexOf('http') === 0) {
+            window.AYO_SERVER = location.protocol + '//' + location.hostname + ':8001';
+            document.write('<script src="' + window.AYO_SERVER + '/socket.io/socket.io.js"><\/script>');
+        }
+    </script>
+    <script src="online.js"></script>
+    <script src="menu.js"></script>
+</body>
+</html>

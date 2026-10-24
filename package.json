@@ -1,0 +1,17 @@
+{
+  "name": "ayo-web",
+  "version": "0.3.0",
+  "private": true,
+  "description": "AYO! card game - web client with bots, themes and synthesized music + online server (friends, presence, game invites)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.22.3",
+    "socket.io": "^4.8.4"
+  }
+}

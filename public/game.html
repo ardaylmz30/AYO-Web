@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AYO! - Game</title>
+
+    <!-- Security Meta Tags -->
+    <!-- Note: some headers, like X-Frame-Options and X-Content-Type-Options, can only be
+         set as real HTTP headers (on the server/CDN side) - they can't be added via meta tag.
+         If you deploy this on Cloudflare Pages / Netlify / Vercel, it's worth adding these too:
+         X-Content-Type-Options: nosniff
+         X-Frame-Options: DENY -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' https://api.qrserver.com;
+        connect-src 'self';
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        frame-ancestors 'none';
+    ">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), fullscreen=(self)">
+
+    <!-- Google Fonts: Outfit for clean, modern game typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="themes.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Game board -->
+        <div id="game-board">
+            <div class="board-glow glow-a"></div>
+            <div class="board-glow glow-b"></div>
+            <div class="board-glow glow-c"></div>
+            <div id="felt-table">
+                <!-- Soft glow on the quarter of the colour ring that is in play -->
+                <div id="color-glow" aria-hidden="true"></div>
+
+                <!-- Direction and color wheel (center) -->
+                <div id="center-wheel" class="clockwise" title="Play direction">
+                    <div class="wheel-disc">
+                        <div class="wheel-dial">
+                            <svg class="arrows" viewBox="0 0 100 100">
+                                <g fill="none" stroke="#f2c14e" stroke-width="7" stroke-linecap="round">
+                                    <path d="M19.93 39.06 A32 32 0 0 1 80.07 39.06"/>
+                                    <path d="M19.93 39.06 A32 32 0 0 1 80.07 39.06" transform="rotate(180 50 50)"/>
+                                </g>
+                                <g fill="#f2c14e">
+                                    <polygon points="83.15,47.52 73.49,41.45 86.65,36.67"/>
+                                    <polygon points="83.15,47.52 73.49,41.45 86.65,36.67" transform="rotate(180 50 50)"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="wheel-core"></div>
+                    </div>
+                </div>
+
+                <!-- Turn ring: a glowing arc that travels to the active player -->
+                <div id="turn-ring"><div class="turn-arc"></div></div>
+
+                <!-- Draw and discard piles -->
+                <div id="piles-container">
+                    <!-- Draw pile -->
+                    <div id="draw-pile" class="card-back">
+                        <div class="card-inner">
+                            <div class="card-star"></div>
+                            <span class="logo-text">AYO</span>
+                        </div>
+                        <div class="draw-prompt">Draw a card</div>
+                    </div>
+                    <!-- Discard pile -->
+                    <div id="discard-pile-container"><div id="active-color-badge" class="active-color">C</div>
+                        <!-- Cards get added here via JS -->
+                        <div id="discard-pile"></div>
+                    </div>
+                </div>
+
+                <!-- Penalty warning banner -->
+                <div id="penalty-banner" class="hidden">
+                    <div class="penalty-text">PENALTY STACK: +2 CARDS!</div>
+                    <div class="penalty-sub">Play a +2 / +4 card or draw from the deck!</div>
+                </div>
+
+                <!-- Player panels and hands -->
+                <!-- Bot 2 (top) -->
+                <div id="player-bot2" class="player-panel pos-top">
+                    <div class="avatar">2</div>
+                    <div class="info">
+                        <div class="name">Bot 2</div>
+                        <div class="card-count">7 Cards</div>
+                    </div>
+                    <div class="hand bot-hand"></div>
+                </div>
+
+                <!-- Bot 1 (left) -->
+                <div id="player-bot1" class="player-panel pos-left">
+                    <div class="avatar">1</div>
+                    <div class="info">
+                        <div class="name">Bot 1</div>
+                        <div class="card-count">7 Cards</div>
+                    </div>
+                    <div class="hand bot-hand"></div>
+                </div>
+
+                <!-- Bot 3 (right) -->
+                <div id="player-bot3" class="player-panel pos-right">
+                    <div class="avatar">3</div>
+                    <div class="info">
+                        <div class="name">Bot 3</div>
+                        <div class="card-count">7 Cards</div>
+                    </div>
+                    <div class="hand bot-hand"></div>
+                </div>
+
+                <!-- You (bottom) -->
+                <div id="player-sen" class="player-panel pos-bottom active-turn">
+                    <div class="avatar">Y</div>
+                    <div class="info">
+                        <div class="name">You</div>
+                        <div class="card-count">7 Cards</div>
+                    </div>
+                </div>
+                <!-- AYO button: press it when you are about to have one card left (shortcut: A) -->
+                <button id="btn-ayo" class="ayo-btn" disabled title="Say AYO when you have one card left (A)">
+                    <span class="ayo-ring" aria-hidden="true"></span><span class="ayo-label">AYO!</span>
+                </button>
+
+                <!-- Human player's cards (kept outside the panel so they can be positioned relative to felt-table) -->
+                <div id="human-hand" class="hand"></div>
+            </div>
+        </div>
+
+        <!-- Top-left actions: back to the main menu + share -->
+        <div class="top-actions">
+            <button id="btn-back-menu" class="share-float" title="Back to the main menu">
+                <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Menu
+            </button>
+            <button id="btn-game-settings" class="share-float" title="Settings">
+                <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="15" cy="7" r="2.4" fill="currentColor"/><circle cx="9" cy="17" r="2.4" fill="currentColor"/></svg><span class="btn-label">Settings</span>
+            </button>
+            <button id="btn-float-share" class="share-float" title="Share the game">Share Game</button>
+        </div>
+
+        <!-- Game log toggle -->
+        <button id="btn-log-toggle" class="log-toggle" aria-expanded="true" aria-controls="sidebar" title="Show / hide game log">
+            <span class="log-toggle-text">Log</span>
+        </button>
+
+        <!-- Left panel: game history logs -->
+        <div id="sidebar">
+            <div id="log-panel">
+                <h3>Game Log</h3>
+                <div id="log-feed">
+                    <div class="log-item system">AYO Web has started!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Speech bubbles (AYO!) -->
+        <div id="speech-bubbles"></div>
+
+        <!-- GAME OVER SCREEN (Game Over Overlay) -->
+        <div id="game-over-overlay" class="overlay hidden">
+            <canvas id="confetti-canvas"></canvas>
+            <div id="game-over-box" class="menu-box over-box">
+                <div class="over-icon-wrap">
+                    <div class="over-rays"></div>
+                    <!-- Trophy (win) -->
+                    <svg class="over-icon over-icon-win" viewBox="0 0 120 120" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" stop-color="#ffe28a"/>
+                                <stop offset=".55" stop-color="#f2c14e"/>
+                                <stop offset="1" stop-color="#b3862a"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M34 24H18c0 20 8 31 21 33M86 24h16c0 20-8 31-21 33" fill="none" stroke="url(#goldGrad)" stroke-width="7" stroke-linecap="round"/>
+                        <path d="M34 16h52v30c0 17-11 30-26 30S34 63 34 46z" fill="url(#goldGrad)"/>
+                        <path d="M43 23v23c0 9 4 17 10 21" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="4" stroke-linecap="round"/>
+                        <rect x="54" y="74" width="12" height="16" fill="url(#goldGrad)"/>
+                        <path d="M38 90h44l5 14H33z" fill="url(#goldGrad)"/>
+                        <path d="M60 26l4.6 9.4 10.4 1.5-7.5 7.3 1.8 10.3L60 49.6l-9.3 4.9 1.8-10.3-7.5-7.3 10.4-1.5z" fill="#fff6d0"/>
+                    </svg>
+                    <!-- Sad face (lose) -->
+                    <svg class="over-icon over-icon-lose" viewBox="0 0 120 120" aria-hidden="true">
+                        <circle cx="60" cy="60" r="44" fill="#2a1519" stroke="#ff5d6c" stroke-width="5"/>
+                        <circle cx="44" cy="52" r="5.5" fill="#ff5d6c"/>
+                        <circle cx="76" cy="52" r="5.5" fill="#ff5d6c"/>
+                        <path d="M42 84c6-11 30-11 36 0" fill="none" stroke="#ff5d6c" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M82 60c5 8 7 12 0 15-7-3-5-7 0-15z" fill="#6fd3ff"/>
+                    </svg>
+                </div>
+                <div id="over-kicker" class="over-kicker">VICTORY</div>
+                <h1 id="win-title">YOU WIN</h1>
+                <p id="win-subtitle" class="subtitle">What a fantastic game!</p>
+                <ul id="over-standings" class="over-standings"></ul>
+                <div class="over-buttons">
+                    <button id="btn-restart" class="btn">PLAY AGAIN</button>
+                    <button id="btn-over-menu" class="btn btn-secondary">MAIN MENU</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEAVE WARNING (Menu button while a game is running) -->
+        <div id="leave-overlay" class="overlay soft-overlay hidden">
+            <div class="menu-box leave-box" role="alertdialog" aria-labelledby="leave-title" aria-describedby="leave-text">
+                <svg class="leave-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5L22 20.5H2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v4.5M12 17.4v.1" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+                <h2 id="leave-title">Leave the game?</h2>
+                <p id="leave-text" class="subtitle">If you go back to the menu, you will lose this game. It will be saved as a loss in your match history.</p>
+                <div class="over-buttons">
+                    <button id="btn-leave-stay" class="btn">KEEP PLAYING</button>
+                    <button id="btn-leave-confirm" class="btn btn-secondary btn-danger">LEAVE &amp; LOSE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- IN-GAME SETTINGS -->
+        <div id="game-settings-overlay" class="overlay soft-overlay hidden">
+            <div class="menu-box settings-box" role="dialog" aria-labelledby="gs-title">
+                <h2 id="gs-title">Settings</h2>
+                <p class="subtitle">Changes are saved automatically. The game is paused.</p>
+                <div class="setting">
+                    <div class="setting-text"><b>Sound effects</b><span>Card sounds and jingles</span></div>
+                    <button id="gs-sound" class="switch" role="switch" aria-checked="true"><span class="knob"></span></button>
+                </div>
+                <div class="setting">
+                    <div class="setting-text"><b>Background music</b><span>Calm, generated in the browser</span></div>
+                    <button id="gs-music" class="switch" role="switch" aria-checked="true"><span class="knob"></span></button>
+                </div>
+                <div class="setting">
+                    <div class="setting-text"><b>Volume</b><span id="gs-vol-label">70%</span></div>
+                    <input id="gs-volume" class="range" type="range" min="0" max="100" step="5" value="70">
+                </div>
+                <div class="setting stacked">
+                    <div class="setting-text"><b>Bot speed</b><span>How fast the bots take their turn</span></div>
+                    <div id="gs-speed" class="segmented">
+                        <button data-value="slow">Slow</button><button data-value="normal">Normal</button><button data-value="fast">Fast</button>
+                    </div>
+                </div>
+                <div class="setting stacked">
+                    <div class="setting-text"><b>Interface scale</b><span>Make the game table smaller or larger</span></div>
+                    <div id="gs-scale" class="segmented">
+                        <button data-value="85">85%</button><button data-value="100">100%</button><button data-value="115">115%</button><button data-value="130">130%</button>
+                    </div>
+                </div>
+                <div class="setting stacked">
+                    <div class="setting-text"><b>Number of bots</b><span>Takes effect from the next game</span></div>
+                    <div id="gs-bots" class="segmented">
+                        <button data-value="1">1</button><button data-value="2">2</button><button data-value="3">3</button>
+                    </div>
+                </div>
+                <button id="btn-settings-close" class="btn settings-done">RESUME GAME</button>
+            </div>
+        </div>
+
+        <!-- COLOR PICKER (Wild cards) -->
+        <div id="color-picker-overlay" class="overlay hidden">
+            <div class="menu-box text-center">
+                <h2>Choose a Color</h2>
+                <div class="color-picker-grid">
+                    <button class="color-choice" data-color="Red">Red</button>
+                    <button class="color-choice" data-color="Blue">Blue</button>
+                    <button class="color-choice" data-color="Green">Green</button>
+                    <button class="color-choice" data-color="Yellow">Yellow</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SHARE SCREEN (Share Overlay) -->
+        <div id="share-overlay" class="overlay hidden">
+            <div class="menu-box">
+                <h2>Share the Game</h2>
+                <p class="subtitle">Scan the QR code below to play on your phone or share the game with your friends.</p>
+                <div id="qr-container">
+                    <img id="qr-image" src="" alt="Loading QR Code..." style="background: white; padding: 10px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 20px;">
+                </div>
+                <div class="share-link-container">
+                    <input type="text" id="share-url" readonly style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: #fff; font-family: monospace; font-size: 13px; outline: none; margin-right: 10px; width: calc(100% - 100px);">
+                    <button id="btn-copy-link" class="btn" style="padding: 10px 20px; font-size: 14px;">Kopyala</button>
+                </div>
+                <button id="btn-share-close" class="btn btn-secondary" style="margin-top: 20px; width: 100%;">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="settings.js"></script>
+    <script src="audio.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        // Opened with another static server (e.g. VS Code "Go Live"): use the AYO! server on port 8001
+        if (typeof io !== 'function' && location.protocol.indexOf('http') === 0) {
+            window.AYO_SERVER = location.protocol + '//' + location.hostname + ':8001';
+            document.write('<script src="' + window.AYO_SERVER + '/socket.io/socket.io.js"><\/script>');
+        }
+    </script>
+    <script src="online.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

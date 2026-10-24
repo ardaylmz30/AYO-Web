@@ -1,10 +1,24 @@
+<div align="center">
+
 # Ayo Web
 
 A modern browser-based card game inspired by the classic UNO experience.
 
-Built with HTML, CSS and JavaScript, with a small Node.js server for the online features. Ayo Web has bots to play against, a friend system with live invites, six table themes, generated café music and smooth animations, on both desktop and mobile.
+<a href="https://green-bird-8b2f.arda-ylmz2005-02.workers.dev"><img src="https://img.shields.io/badge/Live_Demo-Play_now-f2c14e?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Live demo: play now"></a>
+<br><br>
+<a href="README.md"><img src="https://img.shields.io/badge/README-English-1c5fd0?style=for-the-badge" alt="English"></a>
+<a href="README_TR.md"><img src="https://img.shields.io/badge/README-T%C3%BCrk%C3%A7e-e63946?style=for-the-badge" alt="Türkçe"></a>
 
-> Türkçe için: [README_TR.md](README_TR.md)
+<br><br>
+
+<a href="https://green-bird-8b2f.arda-ylmz2005-02.workers.dev"><img src="Screenshots/PC-Desk.png" alt="Ayo Web game table" width="860"></a>
+
+<sub>Live demo: <a href="https://green-bird-8b2f.arda-ylmz2005-02.workers.dev">green-bird-8b2f.arda-ylmz2005-02.workers.dev</a><br>
+The demo runs without the Node server: bots, themes, music and the AYO rule work, the friend features are off.</sub>
+
+</div>
+
+Built with HTML, CSS and JavaScript, with a small Node.js server for the online features. Ayo Web has bots to play against, a friend system with live invites, six table themes, generated café music and smooth animations, on both desktop and mobile.
 
 ## Features
 
@@ -92,17 +106,25 @@ Cloudflare Pages hosts static files, so publish only the **`public/`** folder. O
 
 ### Desktop
 
-![Main menu](Screenshots/PC-Menu.png)
-![Game](Screenshots/PC-Desk.png)
-![Themes](Screenshots/PC-Themes.png)
-![Game - Neon Night theme](Screenshots/PC-Desk-Neon.png)
+<table>
+  <tr>
+    <td align="center"><img src="Screenshots/PC-Menu.png" alt="Main menu" width="420"><br><b>Main menu</b></td>
+    <td align="center"><img src="Screenshots/PC-Themes.png" alt="Themes panel" width="420"><br><b>Six themes</b></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="Screenshots/PC-Desk.png" alt="Game, Classic theme" width="420"><br><b>Classic table</b></td>
+    <td align="center"><img src="Screenshots/PC-Desk-Neon.png" alt="Game, Neon Night theme" width="420"><br><b>Neon Night table</b></td>
+  </tr>
+</table>
 
 ### Mobile
 
-<p>
-  <img src="Screenshots/Mobile-Menu.png" alt="Main menu on mobile" width="300">
-  <img src="Screenshots/Mobile-Desk.png" alt="Game on mobile" width="300">
-</p>
+<table>
+  <tr>
+    <td align="center"><img src="Screenshots/Mobile-Menu.png" alt="Main menu on mobile" width="260"><br><b>Menu</b></td>
+    <td align="center"><img src="Screenshots/Mobile-Desk.png" alt="Game on mobile" width="260"><br><b>Game</b></td>
+  </tr>
+</table>
 
 ## Roadmap
 

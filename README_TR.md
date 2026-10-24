@@ -1,10 +1,24 @@
-# Ayo Web (Türkçe)
+<div align="center">
+
+# Ayo Web
 
 Klasik UNO deneyiminden ilham alan modern, tarayıcı tabanlı bir kart oyunu.
 
-HTML, CSS ve JavaScript ile geliştirildi; online özellikler için küçük bir Node.js sunucusu kullanıyor. **Ayo Web**'de botlara karşı oynayabilir, arkadaş ekleyip canlı davet gönderebilir, altı farklı masa teması arasından seçim yapabilirsin. Kafe tarzı müzik ve akıcı animasyonlarla hem masaüstünde hem mobilde çalışır.
+<a href="https://green-bird-8b2f.arda-ylmz2005-02.workers.dev"><img src="https://img.shields.io/badge/Canl%C4%B1_Demo-Hemen_oyna-f2c14e?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Canlı demo: hemen oyna"></a>
+<br><br>
+<a href="README.md"><img src="https://img.shields.io/badge/README-English-1c5fd0?style=for-the-badge" alt="English"></a>
+<a href="README_TR.md"><img src="https://img.shields.io/badge/README-T%C3%BCrk%C3%A7e-e63946?style=for-the-badge" alt="Türkçe"></a>
 
-> For English: [README.md](README.md)
+<br><br>
+
+<a href="https://green-bird-8b2f.arda-ylmz2005-02.workers.dev"><img src="Screenshots/PC-Desk.png" alt="Ayo Web oyun masası" width="860"></a>
+
+<sub>Canlı demo: <a href="https://green-bird-8b2f.arda-ylmz2005-02.workers.dev">green-bird-8b2f.arda-ylmz2005-02.workers.dev</a><br>
+Demo Node sunucusu olmadan çalışır: botlar, temalar, müzik ve AYO kuralı çalışır, arkadaş özellikleri kapalıdır.</sub>
+
+</div>
+
+HTML, CSS ve JavaScript ile geliştirildi; online özellikler için küçük bir Node.js sunucusu kullanıyor. **Ayo Web**'de botlara karşı oynayabilir, arkadaş ekleyip canlı davet gönderebilir, altı farklı masa teması arasından seçim yapabilirsin. Kafe tarzı müzik ve akıcı animasyonlarla hem masaüstünde hem mobilde çalışır.
 
 ## Özellikler
 
@@ -94,17 +108,25 @@ Cloudflare Pages statik dosya barındırır, bu yüzden sadece **`public/`** kla
 
 ### Masaüstü
 
-![Ana menü](Screenshots/PC-Menu.png)
-![Oyun](Screenshots/PC-Desk.png)
-![Temalar](Screenshots/PC-Themes.png)
-![Oyun - Neon Night teması](Screenshots/PC-Desk-Neon.png)
+<table>
+  <tr>
+    <td align="center"><img src="Screenshots/PC-Menu.png" alt="Ana menü" width="420"><br><b>Ana menü</b></td>
+    <td align="center"><img src="Screenshots/PC-Themes.png" alt="Tema paneli" width="420"><br><b>Altı tema</b></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="Screenshots/PC-Desk.png" alt="Oyun, Classic tema" width="420"><br><b>Classic masa</b></td>
+    <td align="center"><img src="Screenshots/PC-Desk-Neon.png" alt="Oyun, Neon Night teması" width="420"><br><b>Neon Night masa</b></td>
+  </tr>
+</table>
 
 ### Mobil
 
-<p>
-  <img src="Screenshots/Mobile-Menu.png" alt="Mobil ana menü" width="300">
-  <img src="Screenshots/Mobile-Desk.png" alt="Mobil oyun" width="300">
-</p>
+<table>
+  <tr>
+    <td align="center"><img src="Screenshots/Mobile-Menu.png" alt="Mobil ana menü" width="260"><br><b>Menü</b></td>
+    <td align="center"><img src="Screenshots/Mobile-Desk.png" alt="Mobil oyun" width="260"><br><b>Oyun</b></td>
+  </tr>
+</table>
 
 ## Yol Haritası
 

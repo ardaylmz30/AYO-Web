@@ -1,0 +1,116 @@
+/* themes.css - table, background and accent colours for each theme.
+   The theme is set as data-theme on <html>; the Themes panel also puts it on its preview cards.
+   --glow-a/b/c: the slow light blobs behind the table and the menu (r, g, b)
+   --card-back:  the face-down card / draw pile
+   --side-bg:    the game log panel */
+
+:root, [data-theme="classic"] {
+    --color-bg: #08090d;
+    --color-active: #f2c14e;
+    --color-active-2: #ffe28a;
+    --accent-rgb: 242, 193, 78;
+    --accent2-rgb: 255, 226, 138;
+    --accent-deep: #b3862a;
+    --felt: radial-gradient(ellipse at 50% 45%, #1b6a49 0%, #11503a 45%, #082c1f 100%);
+    --rim: linear-gradient(135deg, #7a4a24 0%, #4a2a12 35%, #8a5a2c 60%, #3b210e 100%);
+    --rim-edge: #1d1008;
+    --rim-depth: #2a170a;
+    --glow-a: 0, 119, 182;
+    --glow-b: 230, 57, 70;
+    --glow-c: 42, 157, 143;
+    --card-back: radial-gradient(circle at 50% 40%, #1c1e26 0%, #0c0d11 100%);
+    --side-bg: rgba(15, 17, 23, .95);
+}
+
+[data-theme="midnight"] {
+    --color-bg: #050912;
+    --color-active: #8fc3ff;
+    --color-active-2: #cde4ff;
+    --accent-rgb: 143, 195, 255;
+    --accent2-rgb: 205, 228, 255;
+    --accent-deep: #4f7fb8;
+    --felt: radial-gradient(ellipse at 50% 45%, #22457c 0%, #152d57 45%, #081428 100%);
+    --rim: linear-gradient(135deg, #3c4452 0%, #1c2129 35%, #4c5563 60%, #14181e 100%);
+    --rim-edge: #0b0d11;
+    --rim-depth: #15191f;
+    --glow-a: 40, 90, 200;
+    --glow-b: 110, 70, 210;
+    --glow-c: 70, 160, 255;
+    --card-back: radial-gradient(circle at 50% 40%, #1b2a48 0%, #0a1222 100%);
+    --side-bg: rgba(9, 14, 28, .95);
+}
+
+/* Royal: wine-red velvet, dark walnut, rose gold */
+[data-theme="royal"] {
+    --color-bg: #10050a;
+    --color-active: #f7a98f;
+    --color-active-2: #ffd9cb;
+    --accent-rgb: 247, 169, 143;
+    --accent2-rgb: 255, 217, 203;
+    --accent-deep: #b8644d;
+    --felt: radial-gradient(ellipse at 50% 45%, #93203a 0%, #66142a 45%, #2a0612 100%);
+    --rim: linear-gradient(135deg, #3d2317 0%, #1f110a 35%, #4c2d1d 60%, #160b06 100%);
+    --rim-edge: #0f0704;
+    --rim-depth: #1a0e08;
+    --glow-a: 170, 30, 70;
+    --glow-b: 240, 120, 90;
+    --glow-c: 130, 40, 110;
+    --card-back: radial-gradient(circle at 50% 40%, #3a1420 0%, #16060c 100%);
+    --side-bg: rgba(24, 8, 14, .95);
+}
+
+/* Lagoon: teal water, light oak, aqua */
+[data-theme="lagoon"] {
+    --color-bg: #021212;
+    --color-active: #4fe3cf;
+    --color-active-2: #b6fff3;
+    --accent-rgb: 79, 227, 207;
+    --accent2-rgb: 182, 255, 243;
+    --accent-deep: #1f9c8c;
+    --felt: radial-gradient(ellipse at 50% 45%, #1a8a83 0%, #10625e 45%, #06302f 100%);
+    --rim: linear-gradient(135deg, #c99c64 0%, #9a6e3c 35%, #d3aa74 60%, #7a5530 100%);
+    --rim-edge: #3d2a14;
+    --rim-depth: #5a3e1e;
+    --glow-a: 0, 160, 170;
+    --glow-b: 255, 150, 110;
+    --glow-c: 40, 220, 190;
+    --card-back: radial-gradient(circle at 50% 40%, #0f3a3a 0%, #051817 100%);
+    --side-bg: rgba(5, 24, 24, .95);
+}
+
+[data-theme="neon"] {
+    --color-bg: #07040f;
+    --color-active: #ff5ad9;
+    --color-active-2: #ffaaf0;
+    --accent-rgb: 255, 90, 217;
+    --accent2-rgb: 255, 170, 240;
+    --accent-deep: #a8308f;
+    --felt: radial-gradient(ellipse at 50% 45%, #3d1b72 0%, #26104b 45%, #0d0520 100%);
+    --rim: linear-gradient(135deg, #2c2c38 0%, #0c0c12 35%, #36364c 60%, #08080c 100%);
+    --rim-edge: #000;
+    --rim-depth: #050508;
+    --glow-a: 120, 40, 255;
+    --glow-b: 255, 40, 190;
+    --glow-c: 0, 220, 255;
+    --card-back: radial-gradient(circle at 50% 40%, #2a1248 0%, #0c0518 100%);
+    --side-bg: rgba(14, 7, 26, .95);
+}
+
+/* Graphite: carbon grey with an ember-orange edge */
+[data-theme="graphite"] {
+    --color-bg: #0a0a0b;
+    --color-active: #ff8a3d;
+    --color-active-2: #ffc59a;
+    --accent-rgb: 255, 138, 61;
+    --accent2-rgb: 255, 197, 154;
+    --accent-deep: #c2551a;
+    --felt: radial-gradient(ellipse at 50% 45%, #34373f 0%, #1f2127 45%, #0b0c0f 100%);
+    --rim: linear-gradient(135deg, #2d2f35 0%, #15161a 35%, #36393f 60%, #0e0f12 100%);
+    --rim-edge: #050506;
+    --rim-depth: #0b0b0d;
+    --glow-a: 255, 110, 30;
+    --glow-b: 120, 120, 130;
+    --glow-c: 255, 170, 80;
+    --card-back: radial-gradient(circle at 50% 40%, #26272b 0%, #0d0d0f 100%);
+    --side-bg: rgba(16, 16, 18, .95);
+}

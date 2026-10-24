@@ -1,0 +1,28 @@
+# Dependencies (restored with npm install)
+node_modules/
+
+# Server data: players, friend lists, requests (created at runtime, holds account hashes)
+data/
+*.tmp
+
+# Environment and secrets
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors: keep the shared VS Code settings and the server task, ignore the rest
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+.idea/
+*.swp

@@ -1,0 +1,6 @@
+# Cloudflare Pages: HTTP headers for every page (the local Node server sets the same ones in server.js)
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

@@ -44,7 +44,8 @@ Ayo-Web/
 │   ├── audio.js        # Synthesized sound effects and background music
 │   ├── online.js       # Server connection: presence, friend requests, game invites
 │   ├── settings.js     # Settings, profile, friends and match history (localStorage)
-│   └── bg-pattern.svg  # Background pattern
+│   ├── bg-pattern.svg  # Background pattern
+│   └── _headers        # Security headers for Cloudflare Pages
 ├── Screenshots/
 ├── README.md
 └── README_TR.md
@@ -78,12 +79,30 @@ Serving `public/` with a plain static file server also works, but then friend re
 
 Each account lives in the browser's storage for one address, so you can open several on one computer: `http://localhost:8001`, `http://127.0.0.1:8001`, your local IP, a private window or another browser are all separate players.
 
+## Deploying (Cloudflare Pages)
+
+Cloudflare Pages hosts static files, so publish only the **`public/`** folder. On Pages the game runs in offline mode: bots, themes, music and the AYO rule all work, and the friend features stay off because they need the Node server.
+
+- **From GitHub (recommended):** Workers & Pages → Create → Pages → connect the repository. Framework preset: *None*, build command: *empty*, build output directory: **`public`**.
+- **Drag and drop:** upload the `public` folder only. The whole project folder will not work: `node_modules` alone has about 1,000 files and dashboard uploads stop at 1,000.
+
+`public/_headers` adds the same security headers on Pages that `server.js` sends locally.
+
 ## Screenshots
 
-![Menu Mobile](Screenshots/Mobile-Menu.png)
-![Desk Mobile](Screenshots/Mobile-Desk.png)
-![Menu PC](Screenshots/PC-Menu.png)
-![Desk PC](Screenshots/PC-Desk.png)
+### Desktop
+
+![Main menu](Screenshots/PC-Menu.png)
+![Game](Screenshots/PC-Desk.png)
+![Themes](Screenshots/PC-Themes.png)
+![Game - Neon Night theme](Screenshots/PC-Desk-Neon.png)
+
+### Mobile
+
+<p>
+  <img src="Screenshots/Mobile-Menu.png" alt="Main menu on mobile" width="300">
+  <img src="Screenshots/Mobile-Desk.png" alt="Game on mobile" width="300">
+</p>
 
 ## Roadmap
 

@@ -44,7 +44,8 @@ Ayo-Web/
 │   ├── audio.js        # Tarayıcıda üretilen ses efektleri ve fon müziği
 │   ├── online.js       # Sunucu bağlantısı: online durum, arkadaşlık istekleri, oyun davetleri
 │   ├── settings.js     # Ayarlar, profil, arkadaşlar ve maç geçmişi (localStorage)
-│   └── bg-pattern.svg  # Arka plan deseni
+│   ├── bg-pattern.svg  # Arka plan deseni
+│   └── _headers        # Cloudflare Pages için güvenlik başlıkları
 ├── Screenshots/
 ├── README.md
 └── README_TR.md
@@ -80,12 +81,30 @@ Oyun http://localhost:8001 adresinde açılır. Aynı Wi-Fi'deki telefonlar bilg
 
 Her hesap, tarayıcının o adres için tuttuğu depolamada durur. Bu yüzden tek bilgisayarda birden fazla hesap açabilirsin: `http://localhost:8001`, `http://127.0.0.1:8001`, yerel IP adresin, gizli pencere ya da başka bir tarayıcı ayrı oyuncular olarak sayılır.
 
+## Yayınlama (Cloudflare Pages)
+
+Cloudflare Pages statik dosya barındırır, bu yüzden sadece **`public/`** klasörü yayınlanır. Pages'te oyun çevrimdışı modda çalışır: botlar, temalar, müzik ve AYO kuralı çalışır; arkadaş özellikleri ise Node sunucusu gerektirdiği için kapalı kalır.
+
+- **GitHub üzerinden (önerilen):** Workers & Pages → Create → Pages → depoyu bağla. Framework preset: *None*, build command: *boş*, build output directory: **`public`**.
+- **Sürükle-bırak:** sadece `public` klasörünü yükle. Proje klasörünün tamamı yüklenmez: yalnızca `node_modules` içinde yaklaşık 1.000 dosya var ve panelden yükleme 1.000 dosyada sınırlı.
+
+`public/_headers`, yerelde `server.js`'in gönderdiği güvenlik başlıklarını Pages'te de ekler.
+
 ## Ekran Görüntüleri
 
-![Mobil Menü](Screenshots/Mobile-Menu.png)
-![Mobil Oyun](Screenshots/Mobile-Desk.png)
-![Masaüstü Menü](Screenshots/PC-Menu.png)
-![Masaüstü Oyun](Screenshots/PC-Desk.png)
+### Masaüstü
+
+![Ana menü](Screenshots/PC-Menu.png)
+![Oyun](Screenshots/PC-Desk.png)
+![Temalar](Screenshots/PC-Themes.png)
+![Oyun - Neon Night teması](Screenshots/PC-Desk-Neon.png)
+
+### Mobil
+
+<p>
+  <img src="Screenshots/Mobile-Menu.png" alt="Mobil ana menü" width="300">
+  <img src="Screenshots/Mobile-Desk.png" alt="Mobil oyun" width="300">
+</p>
 
 ## Yol Haritası
 
